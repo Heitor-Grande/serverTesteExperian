@@ -43,9 +43,14 @@ export class FazendaService {
             )
             return "Fazenda Atualizada com sucesso!"
         } catch (error) {
-
             //console.log(error)
-            throw new HttpException("Erro ao atualizar Fazenda.", HttpStatus.INTERNAL_SERVER_ERROR)
+            if (error.code == '23505') {
+
+                throw new HttpException("Fazenda já cadastrada para usuário.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+            else {
+                throw new HttpException("Erro ao atualizar Fazenda.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
     }
 

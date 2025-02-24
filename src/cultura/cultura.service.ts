@@ -30,8 +30,13 @@ export class CulturaService {
             })
             return "Sucesso ao atualizar Cultura!"
         } catch (error) {
-            console.log(error)
-            throw new HttpException("Erro ao atualizar Cultura.", HttpStatus.INTERNAL_SERVER_ERROR)
+            if (error.code == '23505') {
+
+                throw new HttpException("A Cultura já existe para a Safra selecionada.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+            else {
+                throw new HttpException("Erro ao atualizar Cultura.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
     }
 

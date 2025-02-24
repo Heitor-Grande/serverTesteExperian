@@ -37,7 +37,13 @@ export class SafraService {
             return "Safra atualizada com sucesso."
         } catch (error) {
             console.log(error)
-            throw new HttpException("Erro ao Atualizar Safra.", HttpStatus.INTERNAL_SERVER_ERROR)
+            if (error.code == '23505') {
+
+                throw new HttpException("Safra já exite para fazenda selecionada.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+            else {
+                throw new HttpException("Erro ao Atualizar Safra.", HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
     }
 
